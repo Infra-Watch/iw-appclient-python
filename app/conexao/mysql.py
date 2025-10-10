@@ -18,12 +18,12 @@ def executar(query):
             print('Connected to MySQL server version -', db_info)
             with db.cursor() as cursor:
                 cursor.execute(query)
-                resultado = cursor.fetchall()
 
             db.commit()
             cursor.close()
             db.close()
-            return resultado
+            return True
     
     except Error as e:
         print('Error to connect with MySQL -', e)    
+        return False
