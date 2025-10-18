@@ -6,9 +6,9 @@ def porcentagem():
 def frequencia():
     try:
         freq = p.cpu_freq()
-        cpu_freq_mhz = round(freq.current, 2) if freq else None
+        cpu_freq_mhz = round(freq.current, 2) if freq else 'null'
     except Exception:
-        cpu_freq_mhz = None
+        cpu_freq_mhz = 'null'
 
     return cpu_freq_mhz
 
@@ -25,6 +25,6 @@ def temperatura():
             if vals:
                 cpu_temp_c = round(sum(vals) / len(vals), 2)
     except Exception:
-        cpu_temp_c = None
+        cpu_temp_c = 'null'
 
     return cpu_temp_c

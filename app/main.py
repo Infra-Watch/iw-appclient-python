@@ -28,12 +28,12 @@ while True:
     transferencia_entrada_kbps = transferencia_kbps["entrada"]
     transferencia_saida_kbps = transferencia_kbps["saida"]
 
-    str_dados = f"{mac_address.replace("-", "").replace(":", "")}, {cpu_uso_porcentagem}, {cpu_freq_mhz}, {cpu_temp_c}, {ram_uso_porcentagem}, {ram_uso_gb}, {disco_uso_porcentagem}, {disco_velocidade_escrita}, {disco_velocidade_leitura}, {transferencia_entrada_kbps}, {transferencia_saida_kbps}, {data_hora}"
+    str_dados = f"'{mac_address.replace("-", "").replace(":", "")}', {cpu_uso_porcentagem}, {cpu_freq_mhz}, {cpu_temp_c}, {ram_uso_porcentagem}, {ram_uso_gb}, {disco_uso_porcentagem}, {disco_velocidade_escrita}, {disco_velocidade_leitura}, {transferencia_entrada_kbps}, {transferencia_saida_kbps}, '{data_hora}'"
 
     query = f"CALL inserir_captura_python({str_dados})"
 
-    if (True):
-    # if (mysql.executar(query)):
+    # if (True):
+    if (mysql.executar(query)):
         print(f"""
             Executado: {query}
 
