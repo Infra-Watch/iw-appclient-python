@@ -26,5 +26,7 @@ def temperatura():
                 cpu_temp_c = round(sum(vals) / len(vals), 2)
     except Exception:
         cpu_temp_c = 'null'
-
-    return cpu_temp_c
+    if(cpu_temp_c is None):
+        return 'null'
+    else:
+        return cpu_temp_c

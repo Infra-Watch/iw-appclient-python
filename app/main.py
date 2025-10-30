@@ -8,7 +8,11 @@ time.sleep(2)
 mac_address = rede.mac_address()
 
 while True:
-    os.system('cls')
+    if p.LINUX :
+        os.system('clear')
+
+    if p.WINDOWS :
+        os.system('cls')
     
     data_hora = datetime.datetime.now()
 

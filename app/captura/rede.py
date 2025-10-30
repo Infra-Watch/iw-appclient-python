@@ -20,7 +20,7 @@ def transferencia():
 
 def mac_address():
     if p.LINUX :
-        mac_address = p.net_if_addrs().get('wlan0')[2][1]
+        mac_address = p.net_if_addrs().get(list(p.net_if_addrs())[1])[2][1]
 
     if p.WINDOWS :
         mac_address = p.net_if_addrs().get('Wi-Fi')[0][1]
