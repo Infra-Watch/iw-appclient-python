@@ -10,20 +10,18 @@ config = {
     'database': os.getenv("DB_DATABASE")
 }
 
-def executar(query):
+def executar(query, parametros=None):
     try:
         db = connect(**config)
         if db.is_connected():
             db_info = db.server_info
             print('Connected to MySQL server version -', db_info)
             with db.cursor() as cursor:
-                cursor.execute(query)
-
-            db.commit()
-            cursor.close()
+                cursor.execute(query, parametros or())
+                resultados = cursor.fetchall()
+                db.commit()
             db.close()
-            return True
-    
+            return resultados
     except Error as e:
         print('Error to connect with MySQL -', e)    
         return False

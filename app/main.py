@@ -1,6 +1,8 @@
 import psutil as p,datetime, time, os
 from captura import cpu, disco, ram, rede
 from conexao import mysql
+import slack
+
 
 print("Iniciando...")
 time.sleep(2)
@@ -32,6 +34,23 @@ while True:
     transferencia_entrada_kbps = transferencia_kbps["entrada"]
     transferencia_saida_kbps = transferencia_kbps["saida"]
 
+    dados_maquina = {
+        '1001': cpu_uso_porcentagem,
+        '1002': cpu_freq_mhz,
+        '1003': cpu_temp_c,
+        '1004': ram_uso_porcentagem,
+        '1005': ram_uso_gb,
+        '1006': disco_uso_porcentagem,
+        '1007': disco_velocidade_escrita,
+        '1008': disco_velocidade_leitura,
+        '1009': transferencia_entrada_kbps,
+        '1010': transferencia_saida_kbps
+    }
+
+    parametros = slack.buscar_parametros()
+
+    slack.verificar_parametro(parametros, dados_maquina)
+    
     str_dados = f"'{mac_address.replace("-", "").replace(":", "")}', {cpu_uso_porcentagem}, {cpu_freq_mhz}, {cpu_temp_c}, {ram_uso_porcentagem}, {ram_uso_gb}, {disco_uso_porcentagem}, {disco_velocidade_escrita}, {disco_velocidade_leitura}, {transferencia_entrada_kbps}, {transferencia_saida_kbps}, '{data_hora}'"
 
     query = f"CALL inserir_captura_python({str_dados})"
@@ -47,6 +66,7 @@ while True:
               ↳ Frequência de CPU: {cpu_freq_mhz}
               ↳ Temperatura de CPU: {cpu_temp_c}
               ↳ Uso de RAM %: {ram_uso_porcentagem}
+              ↳ Uso de RAM GB: {ram_uso_gb  }
               ↳ Uso de Disco %: {disco_uso_porcentagem}
               ↳ Velocidade de Escrita de Disco: {disco_velocidade_escrita}
               ↳ Velocidade de Leitura de Disco: {disco_velocidade_leitura}
