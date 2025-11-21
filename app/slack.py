@@ -63,7 +63,7 @@ def verificar_parametro(parametros, dados_maquina):
 
         print(f"Parâmetro analisado {descricao_recurso}, valor {valor_coletado}, limite {valor_parametro}")
         if valor_coletado >= valor_parametro:
-            if nivel_parametro == 3:
+            if nivel_parametro == 1:
                 alerta = f"""🔴   ALERTA CRÍTICO em *{apelido_maquina}*: 
                 O recurso *{descricao_recurso}* ultrapassou o limite de criticidade 
                 Valor capturado: {valor_coletado} 
