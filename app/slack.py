@@ -38,7 +38,7 @@ def buscar_parametros():
         print(f"Erro ao buscar parâmetros {e}")
         return[]
 
-def verificar_parametro(parametros, dados_maquina):
+def verificar_parametro(parametros, dados_maquina, mapeamento_alertas):
     print(f"{parametros}")
     if not parametros:
         print("Parâmetros não encontrados")
@@ -62,18 +62,39 @@ def verificar_parametro(parametros, dados_maquina):
             continue
 
         print(f"Parâmetro analisado {descricao_recurso}, valor {valor_coletado}, limite {valor_parametro}")
-        if valor_coletado >= valor_parametro:
-            if nivel_parametro == 1:
-                alerta = f"""🔴   ALERTA CRÍTICO em *{apelido_maquina}*: 
-                O recurso *{descricao_recurso}* ultrapassou o limite de criticidade 
-                Valor capturado: {valor_coletado} 
-                Limite criticidade: {valor_parametro}"""
-                alertas.append(alerta)
-            elif nivel_parametro == 2:
-                alerta = f"""🟡   ALERTA em *{apelido_maquina}*: 
-                O recurso *{descricao_recurso}* ultrapassou o limite de atenção 
-                Valor capturado: {valor_coletado} 
-                Limite atenção: {valor_parametro})"""
+
+        tipo_alerta = mapeamento_alertas.get(str(fkRecurso), None)
+
+        if tipo_alerta is None:
+            print(f"Tipo de alerta não definido para o recurso: {descricao_recurso}")
+            continue
+
+        if tipo_alerta == "acima":
+            if valor_coletado >= valor_parametro:
+                if nivel_parametro == 1:
+                    alerta = f"""🔴   ALERTA CRÍTICO em *{apelido_maquina}*: 
+                    O recurso *{descricao_recurso}* ultrapassou o limite de criticidade 
+                    Valor capturado: {valor_coletado} 
+                    Limite criticidade: {valor_parametro}"""
+                    alertas.append(alerta)
+                elif nivel_parametro == 2:
+                    alerta = f"""🟡   ALERTA em *{apelido_maquina}*: 
+                    O recurso *{descricao_recurso}* ultrapassou o limite de atenção 
+                    Valor capturado: {valor_coletado} 
+                    Limite atenção: {valor_parametro})"""
+        elif tipo_alerta == "abaixo":
+            if valor_coletado <= valor_parametro:
+                if nivel_parametro == 1:
+                    alerta = f"""🔴   ALERTA CRÍTICO em *{apelido_maquina}*: 
+                    O recurso *{descricao_recurso}* ultrapassou o limite de criticidade 
+                    Valor capturado: {valor_coletado} 
+                    Limite criticidade: {valor_parametro}"""
+                    alertas.append(alerta)
+                elif nivel_parametro == 2:
+                    alerta = f"""🟡   ALERTA em *{apelido_maquina}*: 
+                    O recurso *{descricao_recurso}* ultrapassou o limite de atenção 
+                    Valor capturado: {valor_coletado} 
+                    Limite atenção: {valor_parametro})"""
 
     if alertas:
         for alerta in alertas:

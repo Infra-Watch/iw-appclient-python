@@ -3,6 +3,18 @@ from captura import cpu, disco, ram, rede
 from conexao import mysql
 import slack
 
+mapeamento_alertas = {
+    '1001': 'acima',  
+    '1002': 'abaixo', 
+    '1003': 'acima',  
+    '1004': 'acima',  
+    '1005': 'abaixo', 
+    '1006': 'acima',  
+    '1007': 'abaixo',  
+    '1008': 'abaixo', 
+    '1009': 'acima',  
+    '1010': 'acima',  
+}
 
 print("Iniciando...")
 time.sleep(2)
@@ -49,7 +61,7 @@ while True:
 
     parametros = slack.buscar_parametros()
 
-    slack.verificar_parametro(parametros, dados_maquina)
+    slack.verificar_parametro(parametros, dados_maquina, mapeamento_alertas)
     
     str_dados = f"'{mac_address.replace("-", "").replace(":", "")}', {cpu_uso_porcentagem}, {cpu_freq_mhz}, {cpu_temp_c}, {ram_uso_porcentagem}, {ram_uso_gb}, {disco_uso_porcentagem}, {disco_velocidade_escrita}, {disco_velocidade_leitura}, {transferencia_entrada_kbps}, {transferencia_saida_kbps}, '{data_hora}'"
 
